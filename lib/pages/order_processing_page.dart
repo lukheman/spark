@@ -25,7 +25,7 @@ class _OrderProcessingPageState extends State<OrderProcessingPage>
       // Navigator.of(context).pushReplacement(
       //   MaterialPageRoute(builder: (_) => const OrderSuccessPage()),
       // );
-      Navigator.pushNamed(context, '/home');
+      Navigator.pushNamed(context, '/order_tracking');
     });
   }
 

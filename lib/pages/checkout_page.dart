@@ -13,10 +13,16 @@ class CheckoutPage extends StatefulWidget {
 class _CheckoutPageState extends State<CheckoutPage> {
   int qty = 1; // dari previous page
   String selectedPayment = "transfer"; // default
+  String selectedShipping = "spx"; // default jasa pengiriman jika COD
   final int hargaDiskon = 45000;
-  final int ongkir = 15000; // contoh
-  final int biayaAdmin = 2000; // contoh
+  final Map<String, int> shippingCosts = {
+    "spx": 15000,
+    "jne": 20000,
+  }; // dinamis berdasarkan jasa
+  String alamat = "Jl. Example No. 123, Jakarta"; // sekarang dinamis
 
+  int get biayaAdmin => selectedPayment == "transfer" ? 2000 : 0;
+  int get ongkir => selectedPayment == "cash" ? (shippingCosts[selectedShipping] ?? 15000) : 15000; // dinamis jika COD
   int get subtotal => hargaDiskon * qty;
   int get total => subtotal + ongkir + biayaAdmin;
 
@@ -83,35 +89,66 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 ),
               ),
               const SizedBox(height: 24),
-
-              // ===================== PILIH METODE PEMBAYARAN =======================
+              // PILIH METODE PEMBAYARAN
               const Text(
                 "Metode Pembayaran",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
-              Column(
-                children: [
-                  RadioListTile<String>(
-                    value: "cash",
-                    groupValue: selectedPayment,
-                    onChanged: (val) => setState(() => selectedPayment = val!),
-                    title: const Text("Cash on Delivery"),
-                    contentPadding: EdgeInsets.zero,
-                    activeColor: const Color(0xff4D8EFF),
-                  ),
-                  RadioListTile<String>(
-                    value: "transfer",
-                    groupValue: selectedPayment,
-                    onChanged: (val) => setState(() => selectedPayment = val!),
-                    title: const Text("Transfer Bank"),
-                    contentPadding: EdgeInsets.zero,
-                    activeColor: const Color(0xff4D8EFF),
-                  ),
-                ],
+              BlankCardWidget(
+                child: Column(
+                  children: [
+                    RadioListTile<String>(
+                      value: "cash",
+                      groupValue: selectedPayment,
+                      onChanged: (val) => setState(() => selectedPayment = val!),
+                      title: const Text("Cash on Delivery"),
+                      contentPadding: EdgeInsets.zero,
+                      activeColor: const Color(0xff4D8EFF),
+                    ),
+                    RadioListTile<String>(
+                      value: "transfer",
+                      groupValue: selectedPayment,
+                      onChanged: (val) => setState(() => selectedPayment = val!),
+                      title: const Text("Transfer Bank"),
+                      contentPadding: EdgeInsets.zero,
+                      activeColor: const Color(0xff4D8EFF),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 24),
-
+              // ===================== PILIH JASA PENGIRIMAN (HANYA JIKA COD) =======================
+              if (selectedPayment == "cash") ...[
+                const Text(
+                  "Pilih Jasa Pengiriman",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 12),
+                BlankCardWidget(
+                  child: Column(
+                    children: [
+                      RadioListTile<String>(
+                        value: "spx",
+                        groupValue: selectedShipping,
+                        onChanged: (val) => setState(() => selectedShipping = val!),
+                        title: const Text("SPX Hemat - Rp 15.000"),
+                        contentPadding: EdgeInsets.zero,
+                        activeColor: const Color(0xff4D8EFF),
+                      ),
+                      RadioListTile<String>(
+                        value: "jne",
+                        groupValue: selectedShipping,
+                        onChanged: (val) => setState(() => selectedShipping = val!),
+                        title: const Text("JNE Reguler - Rp 20.000"),
+                        contentPadding: EdgeInsets.zero,
+                        activeColor: const Color(0xff4D8EFF),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+              ],
               // ===================== ALAMAT PEMBAYARAN / PENGIRIMAN =======================
               const Text(
                 "Alamat Pengiriman",
@@ -122,25 +159,25 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             "Rumah (Default)",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
                           Text(
-                            "Jl. Example No. 123, Jakarta",
-                            style: TextStyle(color: Colors.grey),
+                            alamat,
+                            style: const TextStyle(color: Colors.grey),
                           ),
                         ],
                       ),
                     ),
                     TextButton(
                       onPressed: () {
-                        // TODO: Ubah alamat
+                        _showChangeAddressDialog(context);
                       },
                       child: const Text(
                         "Ubah",
@@ -151,7 +188,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 ),
               ),
               const SizedBox(height: 24),
-
               // ===================== RINCIAN PEMBAYARAN =======================
               const Text(
                 "Rincian Pembayaran",
@@ -237,6 +273,38 @@ class _CheckoutPageState extends State<CheckoutPage> {
           ],
         ),
       ),
+    );
+  }
+
+  // Dialog untuk ubah alamat
+  void _showChangeAddressDialog(BuildContext context) {
+    final TextEditingController controller = TextEditingController(text: alamat);
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Ubah Alamat"),
+          content: TextField(
+            controller: controller,
+            decoration: const InputDecoration(hintText: "Masukkan alamat baru"),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Batal"),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  alamat = controller.text;
+                });
+                Navigator.pop(context);
+              },
+              child: const Text("Simpan"),
+            ),
+          ],
+        );
+      },
     );
   }
 

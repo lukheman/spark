@@ -19,6 +19,7 @@ class OrderPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 children: [
                   _orderItem(
+                  context: context,
                     image: "assets/images/produk1.webp",
                     title: "Acne Treatment Serum",
                     price: 120000,
@@ -27,6 +28,7 @@ class OrderPage extends StatelessWidget {
                     statusColor: Colors.orange,
                   ),
                   _orderItem(
+                  context: context,
                     image: "assets/images/produk1.webp",
                     title: "Sunscreen SPF 50 PA+++",
                     price: 85000,
@@ -35,6 +37,7 @@ class OrderPage extends StatelessWidget {
                     statusColor: Colors.green,
                   ),
                   _orderItem(
+                  context: context,
                     image: "assets/images/produk1.webp",
                     title: "Facial Wash Gentle Foam",
                     price: 55000,
@@ -52,6 +55,7 @@ class OrderPage extends StatelessWidget {
   }
 
   Widget _orderItem({
+    required BuildContext context, // tambah ini buat navigasi
     required String image,
     required String title,
     required int price,
@@ -67,9 +71,7 @@ class OrderPage extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             child: Image.asset(image, height: 70, width: 70, fit: BoxFit.cover),
           ),
-
           const SizedBox(width: 15),
-
           // TEXT
           Expanded(
             child: Column(
@@ -82,16 +84,12 @@ class OrderPage extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-
                 const SizedBox(height: 6),
-
                 Text(
                   "Rp $price",
                   style: const TextStyle(fontSize: 15, color: Colors.grey),
                 ),
-
                 const SizedBox(height: 6),
-
                 Text(
                   date,
                   style: const TextStyle(color: Colors.black54, fontSize: 13),
@@ -99,7 +97,6 @@ class OrderPage extends StatelessWidget {
               ],
             ),
           ),
-
           // Status & Button Detail
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,8 +109,20 @@ class OrderPage extends StatelessWidget {
                   color: Colors.black54,
                 ),
               ),
-
-              // widget lain di bawahnya
+              const SizedBox(height: 8), // space biar rapi
+              TextButton(
+                onPressed: () {
+                  // Navigasi ke detail pesanan
+                  Navigator.pushNamed(
+                    context,
+                    '/order_tracking',
+                  ); // ganti route sesuai app lo
+                },
+                child: const Text(
+                  "Status Pengiriman",
+                  style: TextStyle(color: Color(0xff4D8EFF)),
+                ),
+              ),
             ],
           ),
         ],

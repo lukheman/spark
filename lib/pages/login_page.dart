@@ -12,6 +12,19 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool hidePassword = true;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  // Fungsi untuk menampilkan pesan error
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,17 +37,13 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               children: [
                 const SizedBox(height: 40),
-
                 // ===================== ILLUSTRATION ======================
                 Image.asset("assets/images/spark_logo.png", height: 180),
-
                 const Text(
                   "Sistem Penjualan Produk Kecantikan",
                   style: TextStyle(fontSize: 16, color: Colors.black54),
                 ),
-
                 const SizedBox(height: 40),
-
                 // ===================== LOGIN TITLE ======================
                 const Text(
                   "Login",
@@ -44,28 +53,56 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.black,
                   ),
                 ),
-
                 const SizedBox(height: 35),
-
                 // ===================== EMAIL INPUT ======================
-                InputWidget(hintText: "Enter your email", icon: Icons.email),
-
+                InputWidget(
+                  hintText: "Enter your email",
+                  icon: Iconsax.sms,
+                  controller: emailController,
+                ),
                 const SizedBox(height: 20),
-
                 // ===================== PASSWORD INPUT ======================
                 InputWidget(
                   hintText: "Enter your password",
-                  icon: Icons.lock,
-                  obscureText: true,
+                  icon: Iconsax.lock,
+                  obscureText: hidePassword,
+                  controller: passwordController,
                 ),
-
                 const SizedBox(height: 25),
-
                 // ===================== LOGIN BUTTON ======================
-                PrimaryButton(label: "Login", onPressed: () {}),
+                PrimaryButton(
+                  label: "Login",
+                  onPressed: () {
+                    final email = emailController.text.trim();
+                    final password = passwordController.text;
 
+                    // 1. Cek jika email kosong
+                    if (email.isEmpty) {
+                      _showError("Please enter your email");
+                      return;
+                    }
+
+                    // 2. Cek jika password kosong
+                    if (password.isEmpty) {
+                      _showError("Please enter your password");
+                      return;
+                    }
+
+                    // 3. Cek email yang benar
+                    if (email == 'admin@gmail.com') {
+                      Navigator.pushNamed(context, '/product_management');
+                    } else if (email == 'pembeli@gmail.com') {
+                      Navigator.pushNamed(context, '/onboarding');
+                    } else {
+                      // Email salah
+                      _showError(
+                        "Invalid email. Use admin@gmail.com or pembeli@gmail.com",
+                      );
+                      return;
+                    }
+                  },
+                ),
                 const SizedBox(height: 20),
-
                 // ===================== REMEMBER + FORGOT ======================
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,9 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 15),
-
                 // ===================== REGISTER LINK ======================
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -116,7 +151,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 40),
               ],
             ),

@@ -7,6 +7,8 @@ import 'package:first_flutter_app/pages/notification_page.dart';
 import 'package:first_flutter_app/pages/onboarding_page.dart';
 import 'package:first_flutter_app/pages/order_page.dart';
 import 'package:first_flutter_app/pages/order_processing_page.dart';
+import 'package:first_flutter_app/pages/order_tracking_page.dart';
+import 'package:first_flutter_app/pages/product_management_page.dart';
 import 'package:first_flutter_app/pages/profile_page.dart';
 import 'package:first_flutter_app/pages/register_page.dart';
 import 'package:first_flutter_app/pages/splash_page.dart';
@@ -42,6 +44,8 @@ class MyApp extends StatelessWidget {
         '/checkout': (context) => CheckoutPage(),
         '/order_processing': (context) => OrderProcessingPage(),
         '/onboarding': (context) => OnboardingPage(),
+        '/order_tracking': (context) => OrderTrackingPage(),
+        '/product_management': (context) => ProductManagementPage(),
       },
     );
   }

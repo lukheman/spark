@@ -24,6 +24,10 @@ class BottomNavWidget extends StatelessWidget {
             child: const Icon(Iconsax.home_1, color: Colors.white, size: 28),
           ),
           GestureDetector(
+            onTap: () => Navigator.pushNamed(context, '/order'),
+            child: const Icon(Iconsax.bag_2, color: Colors.white, size: 28),
+          ),
+          GestureDetector(
             onTap: () => Navigator.pushNamed(context, '/notification'),
             child: const Icon(
               Iconsax.notification,

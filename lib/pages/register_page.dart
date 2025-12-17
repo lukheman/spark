@@ -1,6 +1,7 @@
 import 'package:first_flutter_app/widgets/input_widget.dart';
 import 'package:first_flutter_app/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart'; // Tambahkan import iconsax
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -16,62 +17,39 @@ class RegisterPage extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 40),
-
                 // === ILLUSTRATION ===
-                Image.asset(
-                  "assets/images/spark_logo.png", // ganti dengan ilustrasi kamu
-                  height: 150,
-                ),
-
+                Image.asset("assets/images/spark_logo.png", height: 150),
                 const SizedBox(height: 20),
-
                 // === TITLE ===
                 const Text(
-                  "Get Started",
+                  "Registrasi",
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
-
-                const SizedBox(height: 4),
-
-                const Text(
-                  "by creating a free account.",
-                  style: TextStyle(fontSize: 14, color: Colors.black54),
-                ),
-
                 const SizedBox(height: 30),
-
                 // === FULL NAME ===
-                InputWidget(hintText: "Full name", icon: Icons.person_outline),
-
+                InputWidget(hintText: "Nama lengkap", icon: Iconsax.user),
                 const SizedBox(height: 16),
-
                 // === EMAIL ===
                 InputWidget(
-                  hintText: "Valid email",
-                  icon: Icons.email_outlined,
+                  hintText: "Email",
+                  icon: Iconsax.sms,
                   keyboardType: TextInputType.emailAddress,
                 ),
-
                 const SizedBox(height: 16),
-
                 // === PHONE NUMBER ===
                 InputWidget(
-                  hintText: "Phone number",
-                  icon: Icons.phone_android,
+                  hintText: "Nomor Telephone",
+                  icon: Iconsax.call,
                   keyboardType: TextInputType.phone,
                 ),
-
                 const SizedBox(height: 16),
-
                 // === PASSWORD ===
                 InputWidget(
-                  hintText: "Strong password",
-                  icon: Icons.visibility_off_outlined,
+                  hintText: "Password",
+                  icon: Iconsax.lock,
                   obscureText: true,
                 ),
-
                 const SizedBox(height: 30),
-
                 // === BUTTON REGISTER ===
                 PrimaryButton(
                   label: "Registrasi",
@@ -79,15 +57,13 @@ class RegisterPage extends StatelessWidget {
                     Navigator.pushNamed(context, '/onboarding');
                   },
                 ),
-
                 const SizedBox(height: 20),
-
                 // === LOGIN TEXT ===
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "Already a member? ",
+                      "Telah memiliki akun?",
                       style: TextStyle(fontSize: 14),
                     ),
                     GestureDetector(
@@ -95,7 +71,7 @@ class RegisterPage extends StatelessWidget {
                         Navigator.pushNamed(context, '/login');
                       },
                       child: const Text(
-                        "Login in",
+                        "Masuk",
                         style: TextStyle(
                           fontSize: 14,
                           color: Color(0xFF7C99FF),
@@ -104,7 +80,6 @@ class RegisterPage extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 20),
               ],
             ),
@@ -114,6 +89,7 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
+  // Widget _roundedInput tetap ada tapi tidak dipakai (tidak dihapus karena permintaan "jangan ubah hal lain")
   Widget _roundedInput({
     required String hint,
     required IconData icon,

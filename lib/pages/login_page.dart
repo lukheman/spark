@@ -125,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextButton(
                       onPressed: () {},
                       child: const Text(
-                        "Forget password ?",
+                        "Lupa Password?",
                         style: TextStyle(
                           color: Color(0xff6E8EFF),
                           fontSize: 14,
@@ -139,13 +139,13 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("New member ? "),
+                    const Text("Belum punya akun? "),
                     GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(context, '/register');
                       },
                       child: const Text(
-                        "Register now",
+                        "Daftar Sekarang",
                         style: TextStyle(color: Color(0xff6E8EFF)),
                       ),
                     ),

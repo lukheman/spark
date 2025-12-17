@@ -183,7 +183,9 @@ class _CartPageState extends State<CartPage> {
           ),
 
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/checkout');
+            },
             borderRadius: BorderRadius.circular(12),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),

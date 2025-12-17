@@ -33,7 +33,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const AppBarWidget(title: 'Keranjang'),
+      appBar: const AppBarWidget(title: 'Pesan'),
       body: SafeArea(
         child: Column(
           children: [

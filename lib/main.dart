@@ -2,6 +2,7 @@ import 'package:first_flutter_app/pages/cart_page.dart';
 import 'package:first_flutter_app/pages/checkout_page.dart';
 import 'package:first_flutter_app/pages/edit_profile_page.dart';
 import 'package:first_flutter_app/pages/chat_page.dart';
+import 'package:first_flutter_app/pages/forgot_password_page.dart';
 import 'package:first_flutter_app/pages/login_page.dart';
 import 'package:first_flutter_app/pages/notification_page.dart';
 import 'package:first_flutter_app/pages/onboarding_page.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         '/onboarding': (context) => OnboardingPage(),
         '/order_tracking': (context) => OrderTrackingPage(),
         '/product_management': (context) => ProductManagementPage(),
+        '/forgot_password': (context) => ForgotPasswordPage(),
       },
     );
   }

@@ -123,7 +123,9 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/forgot_password');
+                      },
                       child: const Text(
                         "Lupa Password?",
                         style: TextStyle(

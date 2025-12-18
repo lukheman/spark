@@ -1,24 +1,24 @@
+import 'package:first_flutter_app/data/product.dart';
+import 'package:first_flutter_app/models/product_model.dart';
 import 'package:first_flutter_app/widgets/app_bar_widget.dart';
-import 'package:first_flutter_app/widgets/header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-class ProductDetailPage extends StatefulWidget {
-  const ProductDetailPage({super.key});
-
+class DetailPage extends StatefulWidget {
+  final ProductModel product;
+  const DetailPage({super.key, required this.product});
   @override
-  State<ProductDetailPage> createState() => _ProductDetailPageState();
+  State<DetailPage> createState() => _DetailPageState();
 }
 
-class _ProductDetailPageState extends State<ProductDetailPage>
+class _DetailPageState extends State<DetailPage>
     with SingleTickerProviderStateMixin {
   int qty = 1;
   int cartCount = 0;
   late AnimationController _animationController;
   final GlobalKey _addToCartKey = GlobalKey();
-
   @override
   void initState() {
     super.initState();
@@ -38,7 +38,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     setState(() {
       cartCount += qty;
     });
-
     // notification
     showTopSnackBar(
       Overlay.of(context),
@@ -63,7 +62,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 child: Column(
                   children: [
                     Image.asset(
-                      "assets/images/produk1.webp",
+                      widget.product.image,
                       height: 300,
                       fit: BoxFit.cover,
                     ),
@@ -73,9 +72,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "La Mousse",
-                            style: TextStyle(
+                          Text(
+                            widget.product.name,
+                            style: const TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
                               height: 1.2,
@@ -101,10 +100,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              const Text(
-                                "Rp 45.000",
-                                style: TextStyle(
+                              Text(
+                                "Rp ${widget.product.price.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (m) => '${m[1]}.')}",
+                                style: const TextStyle(
                                   fontSize: 18,
+                                  fontWeight: FontWeight.bold,
                                   color: Color(0xff4D8EFF),
                                 ),
                               ),
@@ -140,10 +140,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                           ),
                           const SizedBox(height: 20),
                           Text(
-                            "Lorem ipsum dolor sit amet consectetur adipisicing elit. "
-                            "Natus aliquam repudiandae reprehenderit incidunt sequi a omnis in, "
-                            "eum iusto soluta sapiente voluptatibus nostrum adipisci voluptas "
-                            "pariatur quod eius totam excepturi?",
+                            widget.product.description,
                             style: TextStyle(
                               fontSize: 15,
                               height: 1.55,
@@ -157,7 +154,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 ),
               ),
             ),
-
             // BOTTOM BAR
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
@@ -199,7 +195,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                       height: 52,
                       child: FilledButton(
                         onPressed: _showCheckoutBottomSheet, // INI YANG BARU!
-
                         style: FilledButton.styleFrom(
                           backgroundColor: const Color(0xff4D8EFF),
                           shape: RoundedRectangleBorder(
@@ -241,9 +236,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   void _showCheckoutBottomSheet() {
     // Gunakan State lokal di dalam bottom sheet supaya qty bisa diubah secara independen
     int localQty = qty; // Ambil nilai awal dari halaman detail
-
     final int hargaDiskon = 45000;
-
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -252,7 +245,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         return StatefulBuilder(
           builder: (context, setStateModal) {
             final int total = hargaDiskon * localQty;
-
             return Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -277,7 +269,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                     ),
                   ),
                   const SizedBox(height: 20),
-
                   // Judul + Close
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -296,7 +287,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                     ],
                   ),
                   const SizedBox(height: 20),
-
                   // Item + Qty Editor
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -304,7 +294,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image.asset(
-                          "assets/images/produk1.webp",
+                          widget.product.image,
                           width: 70,
                           height: 70,
                           fit: BoxFit.cover,
@@ -315,17 +305,17 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              "La Mousse",
-                              style: TextStyle(
+                            Text(
+                              widget.product.name,
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
                               ),
                             ),
                             const SizedBox(height: 6),
-                            Text(
+                            const Text(
                               "Rp 45.000",
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xff4D8EFF),
                                 fontSize: 15,
@@ -334,7 +324,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                           ],
                         ),
                       ),
-
                       // Tombol +/− di sini!
                       Row(
                         children: [
@@ -392,9 +381,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                       ),
                     ],
                   ),
-
                   const Divider(height: 40),
-
                   // Total
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -413,9 +400,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 24),
-
                   // Tombol Lanjut ke Pembayaran
                   SizedBox(
                     width: double.infinity,
@@ -431,7 +416,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                         // Update qty di halaman detail sebelum keluar
                         setState(() => qty = localQty);
                         Navigator.pop(context);
-
                         // Optional: langsung add to cart juga
                         cartCount += localQty;
                         showTopSnackBar(
@@ -442,7 +426,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                             backgroundColor: const Color(0xff4D8EFF),
                           ),
                         );
-
                         // TODO: Pindah ke halaman checkout
                         Navigator.pushNamed(context, '/checkout');
                       },

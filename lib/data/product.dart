@@ -2,7 +2,7 @@ import 'package:first_flutter_app/models/product_model.dart';
 
 final List<ProductModel> productList = [
   ProductModel(
-    name: 'Wardah Exclusive Matte Lip Cream',
+    name: 'YSL Exclusive Matte Lip Cream',
     price: 75000,
     image: 'assets/images/lipstik1.jpg',
     category: ProductCategory.lipstick,
@@ -10,15 +10,15 @@ final List<ProductModel> productList = [
     description: 'Long-lasting matte finish, nyaman di bibir.',
   ),
   ProductModel(
-    name: 'Wardah Crystal Matte Lip Cream',
+    name: 'Warda Crystal Matte Lip Cream',
     price: 68000,
-    image: 'assets/images/libstik2.jpg', // kamu tulis libstik2, aku pakai ya :)
+    image: 'assets/images/libstik2.jpg',
     category: ProductCategory.lipstick,
     rating: 4,
     description: 'Warna intens dengan hasil matte yang lembut.',
   ),
   ProductModel(
-    name: 'Wardah Volume Mascara',
+    name: 'Essence Volume Mascara',
     price: 85000,
     image: 'assets/images/maskara1.jpg',
     category: ProductCategory.mascara,
@@ -26,7 +26,7 @@ final List<ProductModel> productList = [
     description: 'Bikin bulu mata lentik dan bervolume seharian.',
   ),
   ProductModel(
-    name: 'Wardah Hydrating Serum',
+    name: 'Emina Hydrating Serum',
     price: 125000,
     image: 'assets/images/serum1.jpg',
     category: ProductCategory.serum,
@@ -34,7 +34,7 @@ final List<ProductModel> productList = [
     description: 'Melembabkan intensif dengan hyaluronic acid.',
   ),
   ProductModel(
-    name: 'Wardah C-Defense Serum',
+    name: 'Implora C-Defense Serum',
     price: 135000,
     image: 'assets/images/serum2.jpg',
     category: ProductCategory.serum,
@@ -42,7 +42,7 @@ final List<ProductModel> productList = [
     description: 'Vitamin C tinggi, cerahkan wajah dalam 14 hari.',
   ),
   ProductModel(
-    name: 'Wardah Acne Serum',
+    name: 'Emina Acne Serum',
     price: 110000,
     image: 'assets/images/serum3.jpg',
     category: ProductCategory.serum,
@@ -58,7 +58,7 @@ final List<ProductModel> productList = [
     description: 'Ringan, no white cast, cocok daily.',
   ),
   ProductModel(
-    name: 'Wardah Aqua Glass Sunscreen',
+    name: 'Skintific Aqua Glass Sunscreen',
     price: 95000,
     image: 'assets/images/sunscreen2.jpg',
     category: ProductCategory.sunscreen,
@@ -66,7 +66,7 @@ final List<ProductModel> productList = [
     description: 'Tekstur watery, cepat meresap, glowing finish.',
   ),
   ProductModel(
-    name: 'Wardah Hydrating Toner',
+    name: 'Fifa Hydrating Toner',
     price: 45000,
     image: 'assets/images/toner1.jpg',
     category: ProductCategory.toner,
@@ -74,7 +74,7 @@ final List<ProductModel> productList = [
     description: 'Alcohol-free, lembab dan siap pakai serum.',
   ),
   ProductModel(
-    name: 'Wardah Perfect Bright Moisturizer',
+    name: 'Chanel Perfect Bright Moisturizer',
     price: 78000,
     image: 'assets/images/produk1.webp',
     category: ProductCategory.moisturizer,

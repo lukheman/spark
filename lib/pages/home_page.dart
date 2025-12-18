@@ -9,14 +9,14 @@ import 'package:iconsax/iconsax.dart';
 
 class SparkHomePage extends StatefulWidget {
   const SparkHomePage({super.key});
-
   @override
   State<SparkHomePage> createState() => _SparkHomePageState();
 }
 
 class _SparkHomePageState extends State<SparkHomePage> {
   ProductCategory? selectedCategory;
-
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,23 +127,7 @@ class _SparkHomePageState extends State<SparkHomePage> {
               ),
             ],
           ),
-
           // Tombol topup
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            decoration: BoxDecoration(
-              color: const Color(0xff4D8EFF),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Text(
-              "Top Up",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
-              ),
-            ),
-          ),
         ],
       ),
     );
@@ -161,8 +145,14 @@ class _SparkHomePageState extends State<SparkHomePage> {
               color: const Color(0xffF6F6F6),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const TextField(
-              decoration: InputDecoration(
+            child: TextField(
+              controller: _searchController,
+              onChanged: (value) {
+                setState(() {
+                  _searchQuery = value.toLowerCase();
+                });
+              },
+              decoration: const InputDecoration(
                 border: InputBorder.none,
                 icon: Icon(Iconsax.search_normal_1),
                 hintText: "Cari",
@@ -176,10 +166,16 @@ class _SparkHomePageState extends State<SparkHomePage> {
 
   // -------------------------------------------
   Widget _productGrid() {
-    final displayList = selectedCategory == null
-        ? productList
-        : productList.where((p) => p.category == selectedCategory).toList();
-
+    final displayList = productList
+        .where(
+          (p) => selectedCategory == null || p.category == selectedCategory,
+        )
+        .where(
+          (p) =>
+              _searchQuery.isEmpty ||
+              p.name.toLowerCase().contains(_searchQuery),
+        )
+        .toList();
     return GridView.builder(
       physics: const BouncingScrollPhysics(),
       itemCount: displayList.length,
@@ -191,8 +187,7 @@ class _SparkHomePageState extends State<SparkHomePage> {
       ),
       itemBuilder: (context, index) {
         final product = displayList[index];
-
-        return ProductCardWidget(title: product.name, image: product.image);
+        return ProductCardWidget(product: product);
       },
     );
   }
@@ -201,14 +196,12 @@ class _SparkHomePageState extends State<SparkHomePage> {
 class CategoryFilter extends StatefulWidget {
   final Function(ProductCategory?)? onSelected; // null = all
   const CategoryFilter({super.key, this.onSelected});
-
   @override
   State<CategoryFilter> createState() => _CategoryFilterState();
 }
 
 class _CategoryFilterState extends State<CategoryFilter> {
   ProductCategory? selectedCategory; // null = all
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -227,7 +220,6 @@ class _CategoryFilterState extends State<CategoryFilter> {
                 widget.onSelected?.call(null);
               }),
               const SizedBox(width: 12),
-
               for (final cat in ProductCategory.values) ...[
                 _buildItem(cat.displayName, selectedCategory == cat, () {
                   setState(() => selectedCategory = cat);

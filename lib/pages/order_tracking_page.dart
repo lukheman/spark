@@ -62,7 +62,12 @@ class OrderTrackingPage extends StatelessWidget {
     String alamat = "Jl. Example No. 123, Jakarta"; // sekarang dinamis
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const AppBarWidget(title: 'Pesanan Tiba'),
+      appBar: AppBarWidget(
+        title: 'Pesanan Tiba',
+        onTap: () {
+          Navigator.pushNamed(context, '/home');
+        },
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),

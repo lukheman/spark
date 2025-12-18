@@ -1,3 +1,4 @@
+import 'package:first_flutter_app/models/product_model.dart';
 import 'package:first_flutter_app/pages/cart_page.dart';
 import 'package:first_flutter_app/pages/checkout_page.dart';
 import 'package:first_flutter_app/pages/edit_profile_page.dart';
@@ -30,11 +31,19 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       initialRoute: '/',
+      onGenerateRoute: (settings) {
+        if (settings.name == '/detail') {
+          final ProductModel product = settings.arguments as ProductModel;
+          return MaterialPageRoute(
+            builder: (context) => DetailPage(product: product),
+          );
+        }
+        return null;
+      },
       routes: {
         '/': (context) => SplashScreen(),
         '/login': (context) => LoginPage(),
         '/register': (context) => RegisterPage(),
-        '/detail': (context) => ProductDetailPage(),
         '/edit_profile': (context) => EditProfilePage(),
         '/profile': (context) => ProfilePage(),
         '/cart': (context) => CartPage(),

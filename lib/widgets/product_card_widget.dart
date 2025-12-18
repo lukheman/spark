@@ -1,29 +1,20 @@
+import 'package:first_flutter_app/data/product.dart';
+import 'package:first_flutter_app/models/product_model.dart';
 import 'package:first_flutter_app/pages/detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart'; // Lebih modern dari Icons.favorite_border
-
 class ProductCardWidget extends StatefulWidget {
-  final String title;
-  final String image;
-
-  const ProductCardWidget({
-    super.key,
-    required this.title,
-    required this.image,
-  });
-
+  final ProductModel product;
+  const ProductCardWidget({super.key, required this.product});
   @override
   State<ProductCardWidget> createState() => _ProductCardWidgetState();
 }
-
 class _ProductCardWidgetState extends State<ProductCardWidget>
     with SingleTickerProviderStateMixin {
   bool isFavorited = false;
-
   // Animasi halus saat diklik
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
-
   @override
   void initState() {
     super.initState();
@@ -36,20 +27,17 @@ class _ProductCardWidgetState extends State<ProductCardWidget>
       end: 1.4,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.elasticOut));
   }
-
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
-
   void _toggleFavorite() {
     setState(() {
       isFavorited = !isFavorited;
     });
     _controller.forward().then((_) => _controller.reverse());
   }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -74,14 +62,14 @@ class _ProductCardWidgetState extends State<ProductCardWidget>
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ProductDetailPage(),
+                      builder: (context) => DetailPage(product: widget.product),
                     ),
                   );
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Image.asset(
-                    widget.image,
+                    widget.product.image,
                     fit: BoxFit.cover,
                     width: double.infinity,
                   ),
@@ -92,13 +80,25 @@ class _ProductCardWidgetState extends State<ProductCardWidget>
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                widget.title,
+                widget.product.name,
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Rp ${widget.product.price.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (m) => '${m[1]}.')}",
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff4D8EFF),
+                ),
               ),
             ),
             const SizedBox(height: 8),

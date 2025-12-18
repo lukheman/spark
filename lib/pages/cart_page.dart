@@ -29,9 +29,9 @@ class _CartPageState extends State<CartPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 children: [
                   _cartItem(
-                    image: "assets/images/produk1.webp",
-                    title: "Spark Brightening Toner",
-                    price: 89000,
+                    image: "assets/images/lipstik1.jpg",
+                    title: "YSL Exclusive Matte Lip Cream",
+                    price: 75000,
                     qty: qty[0],
                     onAdd: () {
                       setState(() => qty[0]++);
@@ -44,9 +44,9 @@ class _CartPageState extends State<CartPage> {
                   ),
 
                   _cartItem(
-                    image: "assets/images/produk1.webp",
-                    title: "Spark Facial Wash",
-                    price: 59000,
+                    image: "assets/images/libstik2.jpg",
+                    title: "Warda Crystal Matte Lip Cream",
+                    price: 68000,
                     qty: qty[1],
                     onAdd: () {
                       setState(() => qty[1]++);
@@ -59,9 +59,9 @@ class _CartPageState extends State<CartPage> {
                   ),
 
                   _cartItem(
-                    image: "assets/images/produk1.webp",
-                    title: "Spark Sunscreen SPF 50+",
-                    price: 79000,
+                    image: "assets/images/maskara1.jpg",
+                    title: "Essence Volume Mascara",
+                    price: 85000,
                     qty: qty[2],
                     onAdd: () {
                       setState(() => qty[2]++);
